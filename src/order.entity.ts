@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -53,7 +54,7 @@ export class Order {
   @ManyToOne(
     () => CustomerOrderGroup,
     (customerOrderGroup) => customerOrderGroup.orders,
-    { eager: true },
+    { cascade: true },
   )
   @JoinColumn({ name: 'customer_order_group_id' })
   public customerOrderGroup: CustomerOrderGroup;
@@ -62,6 +63,11 @@ export class Order {
   public items: OrderLine[];
 
   @ManyToMany(() => TaxRule)
+  @JoinTable({
+    name: 'order_table_tax_rules',
+    joinColumn: { name: 'order_id' },
+    inverseJoinColumn: { name: 'tax_rules_id' },
+  })
   public taxRules: TaxRule[];
 
   @Column({ name: 'confirmation_timestamp', nullable: true, type: 'datetime' })
