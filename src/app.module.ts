@@ -10,6 +10,11 @@ import { OrderLine } from './order.line.entity';
 import { Product } from './product.entity';
 import { TaxConfig } from './tax.config.entity';
 import { TaxRule } from './tax.rule.entity';
+import { CustomerOrderGroupRepository } from './customer.order.group.repository';
+import { CustomerRepository } from './customer.repository';
+import { OrderRepository } from './order.repository';
+import { TaxConfigRepository } from './tax.config.repository';
+import { TaxRuleRepository } from './tax.rule.repository';
 
 @Module({
   imports: [
@@ -38,6 +43,13 @@ import { TaxRule } from './tax.rule.entity';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    CustomerOrderGroupRepository,
+    CustomerRepository,
+    OrderRepository,
+    TaxConfigRepository,
+    TaxRuleRepository,
+  ],
 })
 export class AppModule {}
