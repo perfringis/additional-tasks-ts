@@ -25,7 +25,7 @@ export class TaxConfig {
     type: 'varchar',
     length: 255,
   })
-  private countryCode: string;
+  public countryCode: string;
 
   @Column({ name: 'last_modified_date', nullable: true, type: 'datetime' })
   private lastModifiedDate: Date;

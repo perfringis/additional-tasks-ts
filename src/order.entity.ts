@@ -38,7 +38,7 @@ export class Order {
   }
 
   @PrimaryGeneratedColumn('uuid')
-  private id: string;
+  public id: string;
 
   @Column({
     name: 'order_state',

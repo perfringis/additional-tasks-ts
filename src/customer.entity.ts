@@ -14,7 +14,7 @@ export enum CustomerType {
 @Entity({ name: 'customer' })
 export class Customer {
   @PrimaryGeneratedColumn('uuid')
-  private id: string;
+  public id: string;
 
   @Column({
     name: 'name',
@@ -23,7 +23,7 @@ export class Customer {
     length: 255,
     unique: true,
   })
-  private name: string;
+  public name: string;
 
   @Column({ nullable: true, type: 'enum', enum: CustomerType })
   private type: CustomerType;
