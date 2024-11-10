@@ -50,7 +50,7 @@ export class Order {
     (customerOrderGroup) => customerOrderGroup.orders,
   )
   @JoinColumn({ name: 'customer_order_group_id' })
-  private customerOrderGroup: CustomerOrderGroup;
+  public customerOrderGroup: CustomerOrderGroup;
 
   @OneToMany(() => OrderLine, (orderLine) => orderLine.order)
   public items: OrderLine[];

@@ -1,4 +1,10 @@
-import { Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Customer } from './customer.entity';
 import { Order } from './order.entity';
 
@@ -7,6 +13,9 @@ export class CustomerOrderGroup {
   @PrimaryGeneratedColumn('uuid')
   private id: string;
 
+  @OneToMany(() => Order, (order) => order.customerOrderGroup, {
+    eager: true,
+  })
   public orders: Set<Order>;
 
   @OneToOne(() => Customer, (customer) => customer.customerOrderGroup, {

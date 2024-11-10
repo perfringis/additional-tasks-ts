@@ -1,0 +1,5 @@
+TaxRules -> dobrze jest zrobione!
+Product -> dobrze jest zrobione!
+OrderLine -> dobrze jest zrobione!
+Order -> dobrze jest zrobione!
+CustomerOrderGroup -> wyglada dobrze ale trzeba wrocic!

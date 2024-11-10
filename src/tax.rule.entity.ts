@@ -43,7 +43,7 @@ export class TaxRule {
 
   @ManyToOne(() => TaxConfig, (taxConfig) => taxConfig.taxRules)
   @JoinColumn({ name: 'tax_config_id' })
-  private taxConfig: TaxConfig;
+  public taxConfig: TaxConfig;
 
   public getTaxConfig(): TaxConfig {
     return this.taxConfig;
