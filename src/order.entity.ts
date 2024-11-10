@@ -26,7 +26,7 @@ export enum OrderType {
   REGULAR_BATCH = 'REGULAR_BATCH',
 }
 
-@Entity({ name: 'order' })
+@Entity({ name: 'order_table' })
 export class Order {
   public getItems(): OrderLine[] {
     return this.items;
@@ -39,10 +39,15 @@ export class Order {
   @PrimaryGeneratedColumn('uuid')
   private id: string;
 
-  @Column({ nullable: true, type: 'enum', enum: OrderState })
+  @Column({
+    name: 'order_state',
+    nullable: true,
+    type: 'enum',
+    enum: OrderState,
+  })
   private orderState: OrderState;
 
-  @Column({ nullable: true, type: 'enum', enum: OrderType })
+  @Column({ name: 'order_type', nullable: true, type: 'enum', enum: OrderType })
   private orderType: OrderType;
 
   @ManyToOne(
