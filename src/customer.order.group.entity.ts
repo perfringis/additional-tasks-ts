@@ -1,12 +1,16 @@
 import {
+  Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Customer } from './customer.entity';
 import { Order } from './order.entity';
+
+import objectHash from 'object-hash';
 
 @Entity({ name: 'customer_order_group' })
 export class CustomerOrderGroup {
@@ -16,16 +20,30 @@ export class CustomerOrderGroup {
   @OneToMany(() => Order, (order) => order.customerOrderGroup)
   public orders: Set<Order>;
 
+  @Column({ name: 'description', nullable: true, type: 'varchar', length: 255 })
+  private description: string;
+
   @OneToOne(() => Customer, (customer) => customer.customerOrderGroup, {
-    eager: true,
+    cascade: true,
   })
   @JoinColumn({ name: 'customer_id' })
   public customer: Customer;
 
-  private parent: CustomerOrderGroup;
+  @ManyToOne(
+    () => CustomerOrderGroup,
+    (customerOrderGroup) => customerOrderGroup.children,
+    {
+      cascade: true,
+    },
+  )
+  @JoinColumn({ name: 'parent_id' })
+  public parent: CustomerOrderGroup;
 
-  private childs: Set<CustomerOrderGroup>;
-  order: any;
+  @OneToMany(
+    () => CustomerOrderGroup,
+    (customerOrderGroup) => customerOrderGroup.parent,
+  )
+  public children: Set<CustomerOrderGroup>;
 
   public getCustomerName(): string {
     return this.customer.getName();
@@ -43,11 +61,23 @@ export class CustomerOrderGroup {
     return this.customer;
   }
 
-  public getChilds(): Set<CustomerOrderGroup> {
-    return this.childs;
+  public getChildren(): Set<CustomerOrderGroup> {
+    return this.children;
   }
 
-  public setChilds(childs: Set<CustomerOrderGroup>): void {
-    this.childs = childs;
+  public setChildren(children: Set<CustomerOrderGroup>): void {
+    this.children = children;
+  }
+
+  public hashCode(): string {
+    return objectHash({ id: this.id });
+  }
+
+  public toString(): string {
+    // prettier-ignore
+    return "CustomerOrderGroup{" +
+            "customer='" + this.customer.getName() + '\'' +
+            ", parent=" + parent +
+            '}';
   }
 }
