@@ -3,6 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Customer } from './customer.entity';
+import { Order } from './order.entity';
+import { CustomerOrderGroup } from './customer.order.group.entity';
+import { OrderLine } from './order.line.entity';
+import { Product } from './product.entity';
+import { TaxConfig } from './tax.config.entity';
+import { TaxRule } from './tax.rule.entity';
 
 @Module({
   imports: [
@@ -19,7 +26,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true,
       logging: true,
-      entities: [],
+      entities: [
+        Customer,
+        CustomerOrderGroup,
+        Order,
+        OrderLine,
+        Product,
+        TaxConfig,
+        TaxRule,
+      ],
     }),
   ],
   controllers: [AppController],

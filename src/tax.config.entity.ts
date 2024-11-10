@@ -39,8 +39,8 @@ export class TaxConfig {
   @Column({ name: 'max_rules_count', nullable: true, type: 'int' })
   private maxRulesCount: number;
 
-  @OneToMany(() => TaxRule, (taxRule) => taxRule.taxConfig, { eager: true })
-  taxRules: TaxRule[];
+  @OneToMany(() => TaxRule, (taxRule) => taxRule.taxConfig)
+  public taxRules: TaxRule[];
 
   public getDescription(): string {
     return this.description;

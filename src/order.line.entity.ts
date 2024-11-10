@@ -13,14 +13,14 @@ export class OrderLine {
   @PrimaryGeneratedColumn('uuid')
   private id: string;
 
-  @Column({ name: 'quantity', nullable: true, type: 'int' })
+  @Column({ name: 'price', nullable: true, type: 'int' })
   private price: number;
 
-  @ManyToOne(() => Order, (order) => order.items)
+  @ManyToOne(() => Order, (order) => order.items, { eager: true })
   @JoinColumn({ name: 'order_id' })
   public order: Order;
 
-  @ManyToOne(() => Product, (product) => product.items)
+  @ManyToOne(() => Product, (product) => product.items, { eager: true })
   @JoinColumn({ name: 'product_id' })
   public product: Product;
 

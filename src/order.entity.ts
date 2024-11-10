@@ -48,6 +48,7 @@ export class Order {
   @ManyToOne(
     () => CustomerOrderGroup,
     (customerOrderGroup) => customerOrderGroup.orders,
+    { eager: true },
   )
   @JoinColumn({ name: 'customer_order_group_id' })
   public customerOrderGroup: CustomerOrderGroup;

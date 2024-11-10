@@ -13,9 +13,7 @@ export class CustomerOrderGroup {
   @PrimaryGeneratedColumn('uuid')
   private id: string;
 
-  @OneToMany(() => Order, (order) => order.customerOrderGroup, {
-    eager: true,
-  })
+  @OneToMany(() => Order, (order) => order.customerOrderGroup)
   public orders: Set<Order>;
 
   @OneToOne(() => Customer, (customer) => customer.customerOrderGroup, {

@@ -7,6 +7,8 @@ import {
 } from 'typeorm';
 import { TaxConfig } from './tax.config.entity';
 
+import objectHash from 'object-hash';
+
 @Entity({ name: 'tax_rule' })
 export class TaxRule {
   @PrimaryGeneratedColumn('uuid')
@@ -23,25 +25,27 @@ export class TaxRule {
   @Column({ name: 'is_linear', nullable: true, type: 'boolean' })
   private isLinear: boolean;
 
-  @Column({ name: 'a_factor', nullable: true, type: 'boolean' })
-  private aFactor: boolean;
+  @Column({ name: 'a_factor', nullable: true, type: 'int' })
+  private aFactor: number;
 
-  @Column({ name: 'b_factor', nullable: true, type: 'boolean' })
-  private bFactor: boolean;
+  @Column({ name: 'b_factor', nullable: true, type: 'int' })
+  private bFactor: number;
 
   @Column({ name: 'is_square', nullable: true, type: 'boolean' })
   private isSquare: boolean;
 
-  @Column({ name: 'a_square_factor', nullable: true, type: 'boolean' })
-  private aSquareFactor: boolean;
+  @Column({ name: 'a_square_factor', nullable: true, type: 'int' })
+  private aSquareFactor: number;
 
-  @Column({ name: 'b_square_factor', nullable: true, type: 'boolean' })
-  private bSquareFactor: boolean;
+  @Column({ name: 'b_square_factor', nullable: true, type: 'int' })
+  private bSquareFactor: number;
 
-  @Column({ name: 'c_square_factor', nullable: true, type: 'boolean' })
-  private cSquareFactor: boolean;
+  @Column({ name: 'c_square_factor', nullable: true, type: 'int' })
+  private cSquareFactor: number;
 
-  @ManyToOne(() => TaxConfig, (taxConfig) => taxConfig.taxRules)
+  @ManyToOne(() => TaxConfig, (taxConfig) => taxConfig.taxRules, {
+    eager: true,
+  })
   @JoinColumn({ name: 'tax_config_id' })
   public taxConfig: TaxConfig;
 
@@ -61,19 +65,63 @@ export class TaxRule {
     this.isLinear = isLinear;
   }
 
-  public getAFactor(): boolean {
+  public getAFactor(): number {
     return this.aFactor;
   }
 
-  public setAFactor(aFactor: boolean): void {
+  public setAFactor(aFactor: number): void {
     this.aFactor = aFactor;
   }
 
-  public getBFactor(): boolean {
+  public getBFactor(): number {
     return this.bFactor;
   }
 
-  public setBFactor(bFactor: boolean): void {
+  public setBFactor(bFactor: number): void {
     this.bFactor = bFactor;
+  }
+
+  public getIsSquare(): boolean {
+    return this.isSquare;
+  }
+
+  public setIsSquare(isSquare: boolean): void {
+    this.isSquare = isSquare;
+  }
+
+  public getASquareFactor(): number {
+    return this.aSquareFactor;
+  }
+
+  public setASquareFactor(aSquareFactor: number): void {
+    this.aSquareFactor = aSquareFactor;
+  }
+
+  public getBSquareFactor(): number {
+    return this.bSquareFactor;
+  }
+
+  public setBSquareFactor(bSquareFactor: number): void {
+    this.bSquareFactor = bSquareFactor;
+  }
+
+  public getCSquareFactor(): number {
+    return this.cSquareFactor;
+  }
+
+  public setCSquareFactor(cSquareFactor: number): void {
+    this.cSquareFactor = cSquareFactor;
+  }
+
+  public setTaxCode(taxCode: string): void {
+    this.taxCode = taxCode;
+  }
+
+  public hashCode(): string {
+    return objectHash({ id: this.id });
+  }
+
+  public getTaxCode(): string {
+    return this.taxCode;
   }
 }

@@ -31,9 +31,6 @@ export class Customer {
   @OneToOne(
     () => CustomerOrderGroup,
     (customerOrderGroup) => customerOrderGroup.customer,
-    {
-      eager: true,
-    },
   )
   public customerOrderGroup: CustomerOrderGroup;
 
