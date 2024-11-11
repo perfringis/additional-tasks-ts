@@ -15,4 +15,8 @@ export class TaxConfigRepository extends Repository<TaxConfig> {
       },
     });
   }
+
+  public async findAll(): Promise<TaxConfig[]> {
+    return await this.findAll();
+  }
 }

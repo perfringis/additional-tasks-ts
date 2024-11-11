@@ -114,4 +114,8 @@ export class TaxRuleService {
 
     await this.taxRuleRepository.remove(taxRule);
   }
+
+  public async findAllConfigs(): Promise<TaxConfig[]> {
+    return await this.taxConfigRepository.findAll();
+  }
 }
