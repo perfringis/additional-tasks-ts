@@ -46,7 +46,7 @@ export class Order {
     type: 'enum',
     enum: OrderState,
   })
-  private orderState: OrderState;
+  public orderState: OrderState;
 
   @Column({ name: 'order_type', nullable: true, type: 'enum', enum: OrderType })
   private orderType: OrderType;

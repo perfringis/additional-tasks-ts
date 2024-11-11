@@ -12,7 +12,7 @@ import objectHash from 'object-hash';
 @Entity({ name: 'tax_rule' })
 export class TaxRule {
   @PrimaryGeneratedColumn('uuid')
-  private id: string;
+  public id: string;
 
   @Column({
     name: 'tax_code',

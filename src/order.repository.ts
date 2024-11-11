@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { Order } from './order.entity';
+import { Order, OrderState } from './order.entity';
 
 @Injectable()
 export class OrderRepository extends Repository<Order> {
@@ -12,6 +12,14 @@ export class OrderRepository extends Repository<Order> {
     return await this.findOne({
       where: {
         id: orderId,
+      },
+    });
+  }
+
+  public async findByOrderState(orderState: OrderState): Promise<Order[]> {
+    return await this.find({
+      where: {
+        orderState: orderState,
       },
     });
   }

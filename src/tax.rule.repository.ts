@@ -7,4 +7,12 @@ export class TaxRuleRepository extends Repository<TaxRule> {
   constructor(private dataSource: DataSource) {
     super(TaxRule, dataSource.createEntityManager());
   }
+
+  public async getOne(taxRuleId: string): Promise<TaxRule> {
+    return this.findOne({
+      where: {
+        id: taxRuleId,
+      },
+    });
+  }
 }
