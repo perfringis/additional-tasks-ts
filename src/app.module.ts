@@ -15,6 +15,9 @@ import { CustomerRepository } from './customer.repository';
 import { OrderRepository } from './order.repository';
 import { TaxConfigRepository } from './tax.config.repository';
 import { TaxRuleRepository } from './tax.rule.repository';
+import { CustomerService } from './customer.service';
+import { OrderService } from './order.service';
+import { TaxRuleService } from './tax.rule.service';
 
 @Module({
   imports: [
@@ -44,12 +47,18 @@ import { TaxRuleRepository } from './tax.rule.repository';
   ],
   controllers: [AppController],
   providers: [
-    AppService,
+    // repository
     CustomerOrderGroupRepository,
     CustomerRepository,
     OrderRepository,
     TaxConfigRepository,
     TaxRuleRepository,
+
+    // service
+    AppService,
+    CustomerService,
+    OrderService,
+    TaxRuleService,
   ],
 })
 export class AppModule {}
