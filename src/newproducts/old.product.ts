@@ -2,6 +2,7 @@ import { NotAcceptableException } from '@nestjs/common';
 import { randomUUID, UUID } from 'crypto';
 
 export class OldProduct {
+  // old product id or move to separate class that handles old product id
   serialNumber: UUID = randomUUID();
   // Create separate object for holding money
   price: number;
