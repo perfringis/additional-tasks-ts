@@ -3,7 +3,7 @@ import { CustomerService } from './customer.service';
 import { CustomerRepository } from './customer.repository';
 import { OrderRepository } from './order.repository';
 import { CustomerOrderGroupRepository } from './customer.order.group.repository';
-import { AuthenticationContextFacade } from './AuthenticationContextFacade';
+import { AuthenticationContextFacade } from './authentication.context.facade';
 import { OrderDto } from './order.dto';
 import { CustomerDto } from './customer.dto';
 import { Customer, CustomerType } from './customer.entity';
@@ -116,7 +116,7 @@ export class OrderService {
   }
 
   public async getOrderById(orderId: string): Promise<OrderDto> {
-    const authentication: string = await this.authenticationContextFacade
+    const authentication: string = this.authenticationContextFacade
       .getAuthentication()
       .getName();
     const c: Customer =
@@ -138,7 +138,7 @@ export class OrderService {
   public async getLoggedCustomerOrders(
     includingSubordinates: boolean,
   ): Promise<OrderDto[]> {
-    const authentication: string = await this.authenticationContextFacade
+    const authentication: string = this.authenticationContextFacade
       .getAuthentication()
       .getName();
     const c: Customer =

@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Customer } from './customer.entity';
@@ -18,6 +16,7 @@ import { TaxRuleRepository } from './tax.rule.repository';
 import { CustomerService } from './customer.service';
 import { OrderService } from './order.service';
 import { TaxRuleService } from './tax.rule.service';
+import { TaxConfigController } from './tax.config.controller';
 
 @Module({
   imports: [
@@ -45,7 +44,7 @@ import { TaxRuleService } from './tax.rule.service';
       ],
     }),
   ],
-  controllers: [AppController],
+  controllers: [TaxConfigController],
   providers: [
     // repository
     CustomerOrderGroupRepository,
@@ -55,7 +54,6 @@ import { TaxRuleService } from './tax.rule.service';
     TaxRuleRepository,
 
     // service
-    AppService,
     CustomerService,
     OrderService,
     TaxRuleService,
