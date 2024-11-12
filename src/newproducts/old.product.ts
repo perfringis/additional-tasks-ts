@@ -5,7 +5,7 @@ export class OldProduct {
   // old product id or move to separate class that handles old product id
   serialNumber: UUID = randomUUID();
   // Create separate object for holding money
-  price: number;
+  price: number | null;
   desc: string;
   longDesc: string;
   // warehouse stock has to be separate too
@@ -32,7 +32,7 @@ export class OldProduct {
   }
 
   constructor(
-    price: number,
+    price: number | null,
     desc: string,
     longDesc: string,
     counter: number | null,
@@ -65,7 +65,7 @@ export class OldProduct {
   }
 
   // Probably, this method will be moved to money class
-  changePriceTo(newPrice: number): void {
+  changePriceTo(newPrice: number | null): void {
     // if warehouse stock doesn't have any items throw the error
     if (this.counter === null) {
       throw new NotAcceptableException('null counter');
