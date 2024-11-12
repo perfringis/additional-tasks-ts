@@ -1,19 +1,17 @@
+import { NotAcceptableException } from '@nestjs/common';
+
 export class Price {
   private value: number | null;
 
   constructor(value: number | null) {
+    if (value === null || value <= 0) {
+      throw new NotAcceptableException('Invalid price');
+    }
+
     this.value = value;
   }
 
-  public isNotNull(): boolean {
-    return this.value !== null;
-  }
-
-  public isPositive(): boolean {
-    return this.value > 0;
-  }
-
-  public isPositiveAndNotNull(): boolean {
-    return this.isPositive() && this.isNotNull();
+  public isNonZero(): boolean {
+    return this.value !== null && this.value > 0;
   }
 }

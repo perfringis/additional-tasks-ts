@@ -25,7 +25,7 @@ export class OldProduct {
 
   // Probably, this method will be moved to warehouse stock class
   decrementCounter(): void {
-    if (this.price.isPositiveAndNotNull()) {
+    if (this.price.isNonZero()) {
       // counter should be validated in separate class
       // taking item from warehouse
       if (this.counter === null) {
@@ -36,14 +36,12 @@ export class OldProduct {
       if (this.counter < 0) {
         throw new NotAcceptableException('Negative counter');
       }
-    } else {
-      throw new NotAcceptableException('Invalid price');
     }
   }
 
   // Probably, this method will be moved to warehouse stock class
   incrementCounter(): void {
-    if (this.price.isPositiveAndNotNull()) {
+    if (this.price.isNonZero()) {
       // when empty stock then throw an error
       if (this.counter === null) {
         throw new NotAcceptableException('null counter');
@@ -54,8 +52,6 @@ export class OldProduct {
       }
       // and item to warehouse stock
       this.counter = this.counter + 1;
-    } else {
-      throw new NotAcceptableException('Invalid price');
     }
   }
 
