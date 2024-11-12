@@ -13,10 +13,10 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest --config ./__tests__/jest.config.json",
+    "test": "jest --config ./__test__/jest.config.json",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "NODE_OPTIONS='-r ts-node/register' node --nolazy --inspect-brk -r tsconfig-paths/register ./node_modules/jest/bin/jest.js --runInBand --colors --verbose --config ./__tests__/jest.config.json ./__tests__",
+    "test:debug": "NODE_OPTIONS='-r ts-node/register' node --nolazy --inspect-brk -r tsconfig-paths/register ./node_modules/jest/bin/jest.js --runInBand --colors --verbose --config ./__test__/jest.config.json ./__tests__",
     "test:e2e": "jest --config ./__e2e__/jest-e2e.json"
   },
   "dependencies": {
