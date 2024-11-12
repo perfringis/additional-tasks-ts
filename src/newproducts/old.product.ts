@@ -11,6 +11,18 @@ export class OldProduct {
   // warehouse stock has to be separate too
   counter: number | null;
 
+  constructor(
+    price: number | null,
+    desc: string,
+    longDesc: string,
+    counter: number | null,
+  ) {
+    this.price = price;
+    this.desc = desc;
+    this.longDesc = longDesc;
+    this.counter = counter;
+  }
+
   // Probably, this method will be moved to warehouse stock class
   decrementCounter(): void {
     // price should be validated in separate money class
@@ -29,18 +41,6 @@ export class OldProduct {
       // throw the error when price is negative
       throw new NotAcceptableException('Invalid price');
     }
-  }
-
-  constructor(
-    price: number | null,
-    desc: string,
-    longDesc: string,
-    counter: number | null,
-  ) {
-    this.price = price;
-    this.desc = desc;
-    this.longDesc = longDesc;
-    this.counter = counter;
   }
 
   // Probably, this method will be moved to warehouse stock class
