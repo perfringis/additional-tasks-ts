@@ -4,7 +4,7 @@ export class Price {
   private value: number | null;
 
   constructor(value: number | null) {
-    if (value === null || value <= 0) {
+    if (value === null || this.signum(value) < 0) {
       throw new NotAcceptableException('Invalid price');
     }
 
@@ -12,6 +12,16 @@ export class Price {
   }
 
   public isNonZero(): boolean {
-    return this.value !== null && this.value > 0;
+    return this.signum(this.value) !== 0;
+  }
+
+  private signum(value: number): number {
+    if (value > 0) {
+      return 1;
+    } else if (value < 0) {
+      return -1;
+    } else if (value === 0) {
+      return 0;
+    }
   }
 }

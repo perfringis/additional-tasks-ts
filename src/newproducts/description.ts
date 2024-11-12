@@ -5,12 +5,7 @@ export class Description {
   private longDesc: string;
 
   constructor(desc: string, longDesc: string) {
-    if (
-      longDesc === null ||
-      longDesc.length === 0 ||
-      desc === null ||
-      desc.length === 0
-    ) {
+    if (longDesc === null || desc === null) {
       throw new NotAcceptableException('null or empty desc');
     }
 
@@ -19,12 +14,7 @@ export class Description {
   }
 
   public isEmpty() {
-    return (
-      this.longDesc === null ||
-      this.longDesc.length === 0 ||
-      this.desc === null ||
-      this.desc.length === 0
-    );
+    return this.longDesc.length === 0 || this.desc.length === 0;
   }
 
   public replace(charToReplace: string, replaceWith: string): Description {

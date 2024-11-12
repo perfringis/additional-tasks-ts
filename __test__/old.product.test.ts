@@ -1,330 +1,125 @@
 import { NotAcceptableException } from '@nestjs/common';
+import { Counter } from 'src/newproducts/counter';
 import { OldProduct } from 'src/newproducts/old.product';
 import { Price } from 'src/newproducts/price';
 
-describe('class OldProduct -> function decrementCounter', () => {
-  test('should not take product from the sock when price is not provided', () => {
-    expect(
-      () =>
-        new OldProduct(
-          null,
-          'sample description',
-          'sample long description',
-          null,
-        ),
-    ).toThrow(new NotAcceptableException('Invalid price'));
-  });
-
-  test('should not take product from the sock when price is 0.0', () => {
-    // expect
-    expect(
-      () =>
-        new OldProduct(
-          0.0,
-          'sample description',
-          'sample long description',
-          null,
-        ),
-    ).toThrow(new NotAcceptableException('Invalid price'));
-  });
-
-  test('should not take product from the sock when stock is not provided', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
-      null,
-    );
-
-    // expect
-    expect(() => oldProduct.decrementCounter()).toThrow(
-      new NotAcceptableException('null counter'),
+describe('OldProduct Test', () => {
+  test('price cannot be null', () => {
+    expect(() => new Price(null)).toThrow(
+      new NotAcceptableException('Invalid price'),
     );
   });
 
-  test('should not take product from the sock when stock has no items', () => {
+  test('can increment counter if price is positive', () => {
     // given
     const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
+      10,
+      'description',
+      'long description',
+      10,
+    );
+
+    // when
+    oldProduct.incrementCounter();
+
+    // then
+    expect(oldProduct.getCounter()).toEqual(new Counter(11));
+  });
+
+  test('cannot increment counter if price is not positive', () => {
+    // given
+    const oldProduct: OldProduct = new OldProduct(
       0,
+      'description',
+      'long description',
+      10,
     );
 
     // expect
-    expect(() => oldProduct.decrementCounter()).toThrow(
-      new NotAcceptableException('Negative counter'),
+    expect(() => oldProduct.incrementCounter()).toThrow(
+      new NotAcceptableException('Invalid price'),
     );
   });
 
-  test('should not take product from the sock when stock is negative', () => {
+  test('can december counter if price is positive', () => {
     // given
     const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
-      -1,
-    );
-
-    // expect
-    expect(() => oldProduct.decrementCounter()).toThrow(
-      new NotAcceptableException('Negative counter'),
-    );
-  });
-
-  test('should take product from the sock when stock has at least one product', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
-      1,
+      10,
+      'description',
+      'long description',
+      10,
     );
 
     // when
     oldProduct.decrementCounter();
 
     // then
-    expect(oldProduct.counter).toEqual(0);
-  });
-});
-
-describe('class OldProduct -> function incrementCounter', () => {
-  test('should not add product to the sock when price is not provided', () => {
-    // expect
-    expect(
-      () =>
-        new OldProduct(
-          null,
-          'sample description',
-          'sample long description',
-          null,
-        ),
-    ).toThrow(new NotAcceptableException('Invalid price'));
+    expect(oldProduct.getCounter()).toEqual(new Counter(9));
   });
 
-  test('should not take product from the sock when price is 0.0', () => {
-    // expect
-    expect(
-      () =>
-        new OldProduct(
-          0.0,
-          'sample description',
-          'sample long description',
-          null,
-        ),
-    ).toThrow(new NotAcceptableException('Invalid price'));
-  });
-
-  test('should not add product to the sock when stock is not provided', () => {
+  test('cannot decrement counter if price is not positive', () => {
     // given
     const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
-      null,
-    );
-
-    // expect
-    expect(() => oldProduct.incrementCounter()).toThrow(
-      new NotAcceptableException('null counter'),
-    );
-  });
-
-  test('should not add product to the sock when stock is negative after adding a product', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
-      -2,
-    );
-
-    // expect
-    expect(() => oldProduct.incrementCounter()).toThrow(
-      new NotAcceptableException('Negative counter'),
-    );
-  });
-
-  test('should add product to the sock when stock is missing one product', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
-      -1,
-    );
-
-    // when
-    oldProduct.incrementCounter();
-
-    // then
-    expect(oldProduct.counter).toEqual(0);
-  });
-
-  test('should add product to the sock when stock is empty', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
       0,
-    );
-
-    // when
-    oldProduct.incrementCounter();
-
-    // then
-    expect(oldProduct.counter).toEqual(1);
-  });
-
-  test('should add product to the sock when stock has 1 product', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
-      1,
-    );
-
-    // when
-    oldProduct.incrementCounter();
-
-    // then
-    expect(oldProduct.counter).toEqual(2);
-  });
-});
-
-describe('class OldProduct -> function changePriceTo', () => {
-  test('should not change price when stock is not provided', () => {
-    // when
-    const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
-      null,
-    );
-
-    // expect
-    expect(() => oldProduct.changePriceTo(new Price(2))).toThrow(
-      new NotAcceptableException('null counter'),
-    );
-  });
-
-  test('should not change price when stock has 0 items', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
-      0,
-    );
-
-    // when
-    oldProduct.changePriceTo(new Price(99.0));
-
-    // then
-    expect(oldProduct.getPrice()).toEqual(new Price(1));
-  });
-
-  test('should not change price when stock has missing items', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
-      -1,
-    );
-
-    // when
-    oldProduct.changePriceTo(new Price(99.0));
-
-    // then
-    expect(oldProduct.getPrice()).toEqual(new Price(1));
-  });
-
-  test('should not change price when provided new price is null', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
-      1,
-    );
-
-    // expect
-    expect(() => oldProduct.changePriceTo(null)).toThrow(
-      new NotAcceptableException('new price null'),
-    );
-  });
-
-  test('should change price when new price is provided and stock has at least one item', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(
-      1,
-      'sample description',
-      'sample long description',
-      1,
-    );
-
-    // when
-    oldProduct.changePriceTo(new Price(99.0));
-
-    // then
-    expect(oldProduct.getPrice()).toEqual(new Price(99.0));
-  });
-});
-
-describe('class OldProduct -> function replaceCharFromDesc', () => {
-  test('should not replace words in description and long description when description and long description is not provided', () => {
-    // expect
-    expect(() => new OldProduct(1, null, null, 1)).toThrow(
-      new NotAcceptableException('null or empty desc'),
-    );
-  });
-
-  test('should not replace words in description and long description when description and long description is empty', () => {
-    // expect
-    expect(() => new OldProduct(1, '', '', 1)).toThrow(
-      new NotAcceptableException('null or empty desc'),
-    );
-  });
-
-  test('should replace words in description and long description', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(
-      1,
-      'old description',
-      'old long description',
-      1,
-    );
-
-    // when
-    oldProduct.replaceCharFromDesc('old', 'new');
-
-    // then
-    expect(oldProduct.getDescription().getDesc()).toEqual('new description');
-    expect(oldProduct.getDescription().getLongDesc()).toEqual(
-      'new long description',
-    );
-  });
-});
-
-describe('class OldProduct -> function formatDesc', () => {
-  test('should return formatted description when description and long description is present', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(
-      1,
       'description',
       'long description',
-      1,
+      0,
+    );
+
+    // expect
+    expect(() => oldProduct.decrementCounter()).toThrow(
+      new NotAcceptableException('Invalid price'),
+    );
+  });
+
+  test('can change price if counter is positive', () => {
+    // given
+    const oldProduct: OldProduct = new OldProduct(
+      0,
+      'description',
+      'long description',
+      10,
     );
 
     // when
-    const formattedDescription: string = oldProduct.formatDesc();
+    oldProduct.changePriceTo(10);
 
     // then
-    expect(formattedDescription).toEqual('description *** long description');
+    expect(oldProduct.getPrice()).toEqual(new Price(10));
+  });
+
+  test('cannot change price if counter is not positive', () => {
+    // given
+    const oldProduct: OldProduct = new OldProduct(
+      0,
+      'description',
+      'long description',
+      10,
+    );
+
+    // when
+    oldProduct.changePriceTo(10);
+
+    // then
+    expect(oldProduct.getPrice()).toEqual(new Price(10));
+  });
+
+  test('can format description', () => {
+    expect(new OldProduct(10, 'short', 'long', 10).formatDesc()).toEqual(
+      'short *** long',
+    );
+    expect(new OldProduct(10, 'short', '', 10).formatDesc()).toEqual('');
+    expect(new OldProduct(10, '', 'long', 10).formatDesc()).toEqual('');
+  });
+
+  test('can change char in description', () => {
+    // given
+    const oldProduct: OldProduct = new OldProduct(10, 'short', 'long', 10);
+
+    // when
+    oldProduct.replaceCharFromDesc('s', 'z');
+
+    // then
+    expect(oldProduct.formatDesc()).toEqual('zhort *** long');
   });
 });
