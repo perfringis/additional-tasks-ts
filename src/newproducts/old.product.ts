@@ -1,13 +1,13 @@
 import { NotAcceptableException } from '@nestjs/common';
 import { OldProductId } from './old.product.id';
 import { Price } from './price';
+import { Description } from './description';
 
 export class OldProduct {
   private serialNumber: OldProductId;
   private price: Price;
 
-  desc: string;
-  longDesc: string;
+  desc: Description;
   counter: number | null;
 
   constructor(
@@ -17,8 +17,7 @@ export class OldProduct {
     counter: number | null,
   ) {
     this.price = new Price(price);
-    this.desc = desc;
-    this.longDesc = longDesc;
+    this.desc = new Description(desc, longDesc);
     this.counter = counter;
   }
 
@@ -59,31 +58,18 @@ export class OldProduct {
   }
 
   replaceCharFromDesc(charToReplace: string, replaceWith: string): void {
-    if (
-      this.longDesc === null ||
-      this.longDesc.length === 0 ||
-      this.desc === null ||
-      this.desc.length === 0
-    ) {
-      throw new NotAcceptableException('null or empty desc');
-    }
-    this.longDesc = this.longDesc.replace(charToReplace, replaceWith);
     this.desc = this.desc.replace(charToReplace, replaceWith);
   }
 
   formatDesc(): string {
-    if (
-      this.longDesc == null ||
-      this.longDesc.length === 0 ||
-      this.desc == null ||
-      this.desc.length === 0
-    ) {
-      return '';
-    }
-    return this.desc + ' *** ' + this.longDesc;
+    return this.desc.format();
   }
 
   public getPrice(): Price {
     return this.price;
+  }
+
+  public getDescription(): Description {
+    return this.desc;
   }
 }

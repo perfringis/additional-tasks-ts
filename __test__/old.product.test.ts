@@ -278,23 +278,17 @@ describe('class OldProduct -> function changePriceTo', () => {
 
 describe('class OldProduct -> function replaceCharFromDesc', () => {
   test('should not replace words in description and long description when description and long description is not provided', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(1, null, null, 1);
-
     // expect
-    expect(() =>
-      oldProduct.replaceCharFromDesc('new description', 'new long description'),
-    ).toThrow(new NotAcceptableException('null or empty desc'));
+    expect(() => new OldProduct(1, null, null, 1)).toThrow(
+      new NotAcceptableException('null or empty desc'),
+    );
   });
 
   test('should not replace words in description and long description when description and long description is empty', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(1, '', '', 1);
-
     // expect
-    expect(() =>
-      oldProduct.replaceCharFromDesc('new description', 'new long description'),
-    ).toThrow(new NotAcceptableException('null or empty desc'));
+    expect(() => new OldProduct(1, '', '', 1)).toThrow(
+      new NotAcceptableException('null or empty desc'),
+    );
   });
 
   test('should replace words in description and long description', () => {
@@ -310,34 +304,14 @@ describe('class OldProduct -> function replaceCharFromDesc', () => {
     oldProduct.replaceCharFromDesc('old', 'new');
 
     // then
-    expect(oldProduct.desc).toEqual('new description');
-    expect(oldProduct.longDesc).toEqual('new long description');
+    expect(oldProduct.getDescription().getDesc()).toEqual('new description');
+    expect(oldProduct.getDescription().getLongDesc()).toEqual(
+      'new long description',
+    );
   });
 });
 
 describe('class OldProduct -> function formatDesc', () => {
-  test('should return empty format string when description and long description is not provided', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(1, null, null, 1);
-
-    // when
-    const formattedDescription: string = oldProduct.formatDesc();
-
-    // then
-    expect(formattedDescription).toEqual('');
-  });
-
-  test('should return empty format string when description and long description is empty', () => {
-    // given
-    const oldProduct: OldProduct = new OldProduct(1, '', '', 1);
-
-    // when
-    const formattedDescription: string = oldProduct.formatDesc();
-
-    // then
-    expect(formattedDescription).toEqual('');
-  });
-
   test('should return formatted description when description and long description is present', () => {
     // given
     const oldProduct: OldProduct = new OldProduct(
