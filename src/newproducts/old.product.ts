@@ -1,9 +1,9 @@
 import { NotAcceptableException } from '@nestjs/common';
-import { randomUUID, UUID } from 'crypto';
+import { OldProductId } from './old.product.id';
 
 export class OldProduct {
-  // old product id or move to separate class that handles old product id
-  serialNumber: UUID = randomUUID();
+  private serialNumber: OldProductId;
+
   // Create separate object for holding money
   price: number | null;
   desc: string;
