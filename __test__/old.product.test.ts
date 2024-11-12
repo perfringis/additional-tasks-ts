@@ -1,5 +1,6 @@
 import { NotAcceptableException } from '@nestjs/common';
 import { OldProduct } from 'src/newproducts/old.product';
+import { Price } from 'src/newproducts/price';
 
 describe('class OldProduct -> function decrementCounter', () => {
   test('should not take product from the sock when price is not provided', () => {
@@ -215,7 +216,7 @@ describe('class OldProduct -> function changePriceTo', () => {
     );
 
     // expect
-    expect(() => oldProduct.changePriceTo(2)).toThrow(
+    expect(() => oldProduct.changePriceTo(new Price(2))).toThrow(
       new NotAcceptableException('null counter'),
     );
   });
@@ -230,10 +231,10 @@ describe('class OldProduct -> function changePriceTo', () => {
     );
 
     // when
-    oldProduct.changePriceTo(99.0);
+    oldProduct.changePriceTo(new Price(99.0));
 
     // then
-    expect(oldProduct.price).toEqual(1);
+    expect(oldProduct.getPrice()).toEqual(new Price(1));
   });
 
   test('should not change price when stock has missing items', () => {
@@ -246,10 +247,10 @@ describe('class OldProduct -> function changePriceTo', () => {
     );
 
     // when
-    oldProduct.changePriceTo(99.0);
+    oldProduct.changePriceTo(new Price(99.0));
 
     // then
-    expect(oldProduct.price).toEqual(1);
+    expect(oldProduct.getPrice()).toEqual(new Price(1));
   });
 
   test('should not change price when provided new price is null', () => {
@@ -277,10 +278,10 @@ describe('class OldProduct -> function changePriceTo', () => {
     );
 
     // when
-    oldProduct.changePriceTo(99.0);
+    oldProduct.changePriceTo(new Price(99.0));
 
     // then
-    expect(oldProduct.price).toEqual(99.0);
+    expect(oldProduct.getPrice()).toEqual(new Price(99.0));
   });
 });
 

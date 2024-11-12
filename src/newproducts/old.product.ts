@@ -1,11 +1,11 @@
 import { NotAcceptableException } from '@nestjs/common';
 import { OldProductId } from './old.product.id';
+import { Price } from './price';
 
 export class OldProduct {
   private serialNumber: OldProductId;
+  private price: Price;
 
-  // Create separate object for holding money
-  price: number | null;
   desc: string;
   longDesc: string;
   // warehouse stock has to be separate too
@@ -17,7 +17,7 @@ export class OldProduct {
     longDesc: string,
     counter: number | null,
   ) {
-    this.price = price;
+    this.price = new Price(price);
     this.desc = desc;
     this.longDesc = longDesc;
     this.counter = counter;
@@ -25,8 +25,7 @@ export class OldProduct {
 
   // Probably, this method will be moved to warehouse stock class
   decrementCounter(): void {
-    // price should be validated in separate money class
-    if (this.price !== null && this.price > 0) {
+    if (this.price.isPositiveAndNotNull()) {
       // counter should be validated in separate class
       // taking item from warehouse
       if (this.counter === null) {
@@ -38,16 +37,13 @@ export class OldProduct {
         throw new NotAcceptableException('Negative counter');
       }
     } else {
-      // throw the error when price is negative
       throw new NotAcceptableException('Invalid price');
     }
   }
 
   // Probably, this method will be moved to warehouse stock class
   incrementCounter(): void {
-    // this logic should be in money class
-    // if price negative or null then throwing the error
-    if (this.price !== null && this.price > 0) {
+    if (this.price.isPositiveAndNotNull()) {
       // when empty stock then throw an error
       if (this.counter === null) {
         throw new NotAcceptableException('null counter');
@@ -59,13 +55,12 @@ export class OldProduct {
       // and item to warehouse stock
       this.counter = this.counter + 1;
     } else {
-      // price can't be negative
       throw new NotAcceptableException('Invalid price');
     }
   }
 
   // Probably, this method will be moved to money class
-  changePriceTo(newPrice: number | null): void {
+  changePriceTo(newPrice: Price): void {
     // if warehouse stock doesn't have any items throw the error
     if (this.counter === null) {
       throw new NotAcceptableException('null counter');
@@ -76,7 +71,6 @@ export class OldProduct {
       if (newPrice === null) {
         throw new NotAcceptableException('new price null');
       }
-      // update price
       this.price = newPrice;
     }
   }
@@ -112,5 +106,9 @@ export class OldProduct {
     }
     // return formatted description
     return this.desc + ' *** ' + this.longDesc;
+  }
+
+  public getPrice(): Price {
+    return this.price;
   }
 }
