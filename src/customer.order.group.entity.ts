@@ -75,9 +75,9 @@ export class CustomerOrderGroup {
 
   public toString(): string {
     // prettier-ignore
-    return "CustomerOrderGroup{" +
-            "customer='" + this.customer.getName() + '\'' +
-            ", parent=" + parent +
-            '}';
+    return 'CustomerOrderGroup{' +
+      'customer=\'' + this.customer.getName() + '\'' +
+      ', parent=' + parent +
+      '}';
   }
 }

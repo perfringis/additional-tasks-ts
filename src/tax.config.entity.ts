@@ -6,7 +6,7 @@ import objectHash from 'object-hash';
 @Entity({ name: 'tax_config' })
 export class TaxConfig {
   @PrimaryGeneratedColumn('uuid')
-  private id: string;
+  public id: string;
 
   @Column({ name: 'description', nullable: true, type: 'varchar', length: 255 })
   private description: string;
@@ -68,6 +68,10 @@ export class TaxConfig {
 
   public getLastModifiedDate(): Date {
     return this.lastModifiedDate;
+  }
+
+  public setLastModifiedDate(lastModifiedDate: Date): void {
+    this.lastModifiedDate = lastModifiedDate;
   }
 
   public getModifiedBy(): string {

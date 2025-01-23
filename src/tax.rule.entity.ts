@@ -49,6 +49,10 @@ export class TaxRule {
   @JoinColumn({ name: 'tax_config_id' })
   public taxConfig: TaxConfig;
 
+  public getId(): string {
+    return this.id;
+  }
+
   public getTaxConfig(): TaxConfig {
     return this.taxConfig;
   }
