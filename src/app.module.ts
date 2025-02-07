@@ -17,6 +17,11 @@ import { CustomerService } from './customer.service';
 import { OrderService } from './order.service';
 import { TaxRuleService } from './tax.rule.service';
 import { TaxConfigController } from './tax.config.controller';
+import { OldProductRepository } from './newproducts/old.product.repository';
+import { OldProductService } from './newproducts/old.product.service';
+import { AuthenticationContextFacade } from './authentication.context.facade';
+import { OldProductDescriptionRepository } from './newproducts/old.product.description.repository';
+import { OldProduct } from './newproducts/old.product';
 
 @Module({
   imports: [
@@ -41,6 +46,7 @@ import { TaxConfigController } from './tax.config.controller';
         Product,
         TaxConfig,
         TaxRule,
+        OldProduct,
       ],
     }),
   ],
@@ -57,6 +63,12 @@ import { TaxConfigController } from './tax.config.controller';
     CustomerService,
     OrderService,
     TaxRuleService,
+
+    // other
+    OldProductRepository,
+    OldProductService,
+    AuthenticationContextFacade,
+    OldProductDescriptionRepository,
   ],
 })
 export class AppModule {}

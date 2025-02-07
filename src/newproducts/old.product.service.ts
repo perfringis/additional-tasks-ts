@@ -3,7 +3,9 @@ import { OldProductDescriptionRepository } from './old.product.description.repos
 import { OldProductDescription } from './old.product.description';
 import { OldProduct } from './old.product';
 import { UUID } from 'crypto';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class OldProductService {
   constructor(
     private readonly oldProductRepository: OldProductRepository,

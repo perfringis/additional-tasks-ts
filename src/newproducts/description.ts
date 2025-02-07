@@ -2,37 +2,37 @@ import { NotAcceptableException } from '@nestjs/common';
 import { Column } from 'typeorm';
 
 export class Description {
-  @Column({ name: '_value', nullable: true, type: 'varchar' })
-  private desc: string;
+  @Column({ name: '_short', nullable: true, type: 'varchar' })
+  private short: string;
 
-  @Column({ name: '_value', nullable: true, type: 'varchar' })
-  private longDesc: string;
+  @Column({ name: '_long', nullable: true, type: 'varchar' })
+  private long: string;
 
-  constructor(desc: string, longDesc: string) {
-    if (!desc) {
+  constructor(short: string, long: string) {
+    if (short === null) {
       throw new NotAcceptableException('Cannot have a null description');
     }
 
-    if (!longDesc) {
+    if (long === null) {
       throw new NotAcceptableException('Cannot have null long description');
     }
 
-    this.desc = desc;
-    this.longDesc = longDesc;
+    this.short = short;
+    this.long = long;
   }
 
   public formatted(): string {
-    if (!this.desc || !this.longDesc) {
+    if (!this.short || !this.long) {
       return '';
     }
 
-    return this.desc + ' *** ' + this.longDesc;
+    return this.short + ' *** ' + this.long;
   }
 
   public replace(charToReplace: string, replaceWith: string): Description {
     return new Description(
-      this.desc.replace(charToReplace, replaceWith),
-      this.longDesc.replace(charToReplace, replaceWith),
+      this.short.replace(charToReplace, replaceWith),
+      this.long.replace(charToReplace, replaceWith),
     );
   }
 }
